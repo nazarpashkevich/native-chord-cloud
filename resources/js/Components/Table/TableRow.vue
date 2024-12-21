@@ -17,10 +17,11 @@ export default defineComponent({
 </script>
 
 <template>
-    <tr class="bg-light-surface hover:backdrop-brightness-105 cursor-pointer">
+    <tr class="hover:bg-light-surface-attended cursor-pointer"
+        :class="[item.isActive ? 'bg-light-surface-active' : 'bg-light-surface']">
         <template v-for="header in headers">
-            <td class="p-4 border-b border-blue-gray-50">
-                <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
+            <td class="p-4 border-b border-light-background">
+                <p class="block font-sans text-sm text-blue-gray-900">
                     {{ item[header.field] }}
                 </p>
             </td>

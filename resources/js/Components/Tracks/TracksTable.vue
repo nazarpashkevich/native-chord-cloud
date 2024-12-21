@@ -1,6 +1,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import MainTable from "@/Components/Table/MainTable.vue";
+import { mapMutations } from "vuex";
 
 export default defineComponent({
     name: "TracksTable",
@@ -27,20 +28,22 @@ export default defineComponent({
             },
             {
                 title: 'T',
-                field: 'playtime'
+                field: 'playtime_formatted'
             },
         ],
-    })
+    }),
+    methods: {
+        playTrack(track): void {
+            this.setCurrentTrack(track);
+        },
+        ...mapMutations('playerStore', ['setCurrentTrack', 'setIsPlaying', 'setCurrentTime']),
+    }
 })
 </script>
 
 <template>
     <div
         class="relative flex flex-col overflow-y-scroll text-gray-700 bg-white shadow-md rounded-xl bg-clip-border">
-        <MainTable :items="items" :headers="headers"/>
+        <MainTable :items="items" :headers="headers" @row-action="playTrack"/>
     </div>
 </template>
-
-<style scoped>
-
-</style>

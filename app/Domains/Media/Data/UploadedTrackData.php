@@ -3,6 +3,7 @@
 namespace App\Domains\Media\Data;
 
 use App\Domains\Common\Data\BaseData;
+use Illuminate\Support\Carbon;
 
 class UploadedTrackData extends BaseData
 {
@@ -14,5 +15,12 @@ class UploadedTrackData extends BaseData
         public readonly string $path,
         public readonly ?string $id = null,
     ) {
+    }
+
+    public function with(): array
+    {
+        return [
+            'playtime_formatted' => Carbon::createFromTimestamp($this->playtime)->format('i:s'),
+        ];
     }
 }

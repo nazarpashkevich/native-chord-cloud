@@ -11,41 +11,34 @@ export default defineComponent({
     name: "BottomPlayer",
     components: { ResumeIcon, VolumeIcon, NextIcon, PauseIcon, PreviousIcon },
     computed: {
-        ...mapState("playerStore", ["volume", "isPlaying", "currentTime", "duration"]),
+        ...mapState("playerStore", ["volume", "isPlaying", "currentTime", "duration", "currentTrack"]),
     },
     methods: {
-        updateTime() {
+        updateTime(): void {
             const audio = this.$refs.audio;
             if (audio) {
                 this.setCurrentTime(audio.currentTime);
                 this.setDuration(audio.duration);
             }
         },
-        onEnded() {
+        onEnded(): void {
             this.setIsPlaying(false);
             this.setCurrentTime(0);
         },
-        togglePlayPause() {
-            const audio = this.$refs.audio;
-            if (audio.paused) {
-                audio.play();
-                this.setIsPlaying(true);
-            } else {
-                audio.pause();
-                this.setIsPlaying(false);
-            }
+        togglePlayPause(): void {
+            this.setIsPlaying(!this.isPlaying);
         },
-        seek(event) {
+        seek(event: Event): void {
             const audio = this.$refs.audio;
             audio.currentTime = event.target.value;
             this.setCurrentTime(event.target.value);
         },
-        formatTime(seconds) {
+        formatTime(seconds: number): string {
             const minutes = Math.floor(seconds / 60);
             const secs = Math.floor(seconds % 60).toString().padStart(2, '0');
             return `${minutes}:${secs}`;
         },
-        changeVolume(event) {
+        changeVolume(event: Event): void {
             const audio = this.$refs.audio;
             audio.volume = event.target.value;
             this.setVolume(audio.volume);
@@ -64,34 +57,52 @@ export default defineComponent({
             }
         });
     },
+    watch: {
+        isPlaying(newValue) {
+            const audio = this.$refs.audio;
+            if (newValue) {
+                audio.play();
+            } else {
+                audio.pause();
+            }
+        },
+        currentTrack(newValue) {
+            this.$refs.audio.src = newValue.path;
+            this.$refs.audio.load();
+            this.$refs.audio.oncanplaythrough = () => {
+                this.$refs.audio.play();
+                this.setIsPlaying(true);
+            };
+        },
+    },
 })
 </script>
 
 <template>
-    <div class="flex w-full h-full px-8 py-3">
-        <div class="flex gap-4 mr-12">
+    <div class="flex w-full h-full px-8 py-3 box-">
+        <div class="flex gap-4 mr-6">
             <audio ref="audio"
-                   src="file:\/\/home\/nazar\/Metallica.mp3"
+                   :src="`file://${encodeURI(currentTrack.path)}`"
                    @timeupdate="updateTime"
                    @ended="onEnded"></audio>
             <div
-                class="rounded-full border-4 border-light-primary w-10 flex cursor-pointer hover:backdrop-brightness-105">
+                class="rounded-full border-4 border-light-primary h-12 w-12 flex cursor-pointer hover:backdrop-brightness-105">
                 <PreviousIcon class="text-light-primary m-auto"/>
             </div>
             <div
                 @click="togglePlayPause"
-                class="rounded-full border-4 border-light-primary w-10 flex cursor-pointer hover:backdrop-brightness-105">
+                class="rounded-full border-4 border-light-primary h-12 w-12 flex cursor-pointer hover:backdrop-brightness-105">
                 <PauseIcon v-if="isPlaying" class="text-light-primary m-auto"/>
                 <ResumeIcon v-else class="text-light-primary m-auto"/>
             </div>
             <div
-                class="rounded-full border-4 border-light-primary w-10 flex cursor-pointer hover:backdrop-brightness-105">
+                class="rounded-full border-4 border-light-primary h-12 w-12 flex cursor-pointer hover:backdrop-brightness-105">
                 <NextIcon class="text-light-primary m-auto"/>
             </div>
         </div>
-        <div class="max-w-60 w-full flex flex-col">
-            <span class="font-medium text-lg">Some Text title</span>
-            <span class="font-medium text-sm">Some songer</span>
+        <div class="max-w-60 w-full flex flex-col mr-2 whitespace-nowrap overflow-x-hidden">
+            <span class="font-medium text-lg w-full animate-marquee">{{ currentTrack.title }}</span>
+            <span class="font-medium text-sm">{{ currentTrack.author }}</span>
         </div>
         <div class="my-auto max-w-80 w-full relative flex gap-2">
             <span class="text-xs">{{ formatTime(currentTime) }}</span>

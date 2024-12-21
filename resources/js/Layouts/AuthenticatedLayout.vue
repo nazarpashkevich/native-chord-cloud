@@ -106,7 +106,7 @@ export default defineComponent({
                     </div>
                 </div>
 
-                <div class="flex w-full h-16 sticky bottom-0">
+                <div class="flex w-full sticky bottom-0">
                     <div class="bg-light-surface border border-light-primary w-full rounded-t-md max-w-5xl mx-auto">
                         <keep-alive>
                             <BottomPlayer key="fixed-key"/>

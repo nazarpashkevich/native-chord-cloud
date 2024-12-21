@@ -2,10 +2,14 @@
 import { defineComponent } from 'vue'
 import TableHeaderColumn from "@/Components/Table/TableHeaderColumn.vue";
 import TableRow from "@/Components/Table/TableRow.vue";
+import { mapState } from "vuex";
 
 export default defineComponent({
     name: "MainTable",
     components: { TableRow, TableHeaderColumn },
+    computed: {
+        ...mapState("playerStore", ["trackSrc"]),
+    },
     props: {
         headers: {
             type: Array,
@@ -15,7 +19,8 @@ export default defineComponent({
             type: Array,
             required: true
         }
-    }
+    },
+    emits: ['rowAction']
 })
 </script>
 
@@ -30,7 +35,10 @@ export default defineComponent({
         </thead>
         <tbody>
         <template v-for="item in items">
-            <TableRow :item="item" :headers="headers"/>
+            <TableRow :item="{...item, isActive: item.path === trackSrc}"
+                      :headers="headers"
+                      @click="this.$emit('rowAction', item)"
+            />
         </template>
         </tbody>
     </table>

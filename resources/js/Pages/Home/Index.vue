@@ -8,7 +8,6 @@ import AllTracks from "@/Pages/Home/Partials/AllTracks.vue";
 export default defineComponent({
     name: "HomePage",
     components: {
-        AuthenticatedLayout,
         Head,
         JustForYou,
         AllTracks,
@@ -19,6 +18,9 @@ export default defineComponent({
             type: Array,
             required: true
         }
+    },
+    setup({ props }) {
+        console.log('tracks', props);
     }
 });
 </script>

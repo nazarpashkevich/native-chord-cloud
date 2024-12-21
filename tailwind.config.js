@@ -16,6 +16,24 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            animation: {
+                marquee: 'marquee 25s ease-in-out infinite',
+            },
+            keyframes: {
+                marquee: {
+                    '0%': {
+                        transform: 'translateX(0%)',
+                        animationTimingFunction: 'ease-in',
+                    },
+                    '50%': {
+                        transform: 'translateX(-50%)',
+                        animationTimingFunction: 'ease-out',
+                    },
+                    '100%': {
+                        transform: 'translateX(0%)',
+                    },
+                },
+            }
         },
         colors: {
             ...colors,
@@ -24,6 +42,8 @@ export default {
                 secondary: '#435058', // Outer space
                 background: '#F1F2EE', // White smoke
                 surface: 'rgba(225,216,213,0.61)', // Silver
+                "surface-attended": 'rgba(225,216,213,0.35)', // Silver
+                "surface-active": 'rgba(188,181,177,0.7)', // Silver
                 text: 'rgba(40,46,48,0.97)', // Battleship gray
             },
             dark: {

@@ -12,7 +12,6 @@ class TrackService
     public function upload(UploadTrackData $data): UploadedTrack
     {
         $track = $data->toModel();
-
         $track->save();
 
         return $track;

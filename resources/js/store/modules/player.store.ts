@@ -5,6 +5,7 @@ export default {
         currentTime: 0,
         duration: 0,
         volume: 0.8,
+        currentTrack: {},
     }),
     mutations: {
         setCurrentTime(state, time: number) {
@@ -18,6 +19,9 @@ export default {
         },
         setIsPlaying(state, isPlaying: boolean) {
             state.isPlaying = isPlaying;
+        },
+        setCurrentTrack(state, track) {
+            state.currentTrack = track;
         },
     },
     actions: {},

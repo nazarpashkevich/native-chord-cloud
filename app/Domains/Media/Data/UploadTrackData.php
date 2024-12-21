@@ -3,13 +3,16 @@
 namespace App\Domains\Media\Data;
 
 use App\Domains\Media\Models\UploadedTrack;
-use getID3;
 use Spatie\LaravelData\Data;
 
 class UploadTrackData extends Data
 {
     public function __construct(
-        public readonly string $track
+        public readonly string $title,
+        public readonly string $author,
+        public readonly string $album,
+        public readonly string $playtime,
+        public readonly string $path,
     ) {
     }
 
@@ -21,15 +24,12 @@ class UploadTrackData extends Data
 
         $track ??= new UploadedTrack();
 
-        $getID3 = new getID3();
-        $fileInfo = $getID3->analyze($this->track);
-
         $track->fill([
-            'title'    => $fileInfo['filename'],
-            'author'   => $fileInfo['tags']['id3v2']['artist'][0] ?? '',
-            'album'    => $fileInfo['tags']['id3v2']['album'][0] ?? '',
-            'playtime' => $fileInfo['playtime_seconds'] ?? 0,
-            'path'     => $this->track,
+            'title'    => $this->title,
+            'author'   => $this->author,
+            'album'    => $this->album,
+            'playtime' => $this->playtime,
+            'path'     => $this->path,
         ]);
 
         return $track;

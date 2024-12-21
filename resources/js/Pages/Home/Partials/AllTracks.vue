@@ -26,7 +26,7 @@ export default defineComponent({
 <template>
     <div class="flex">
         <div class="text-4xl font-semibold text-light-text">
-            All Tracks
+            Local library tracks
         </div>
         <div class="ml-auto">
             <button

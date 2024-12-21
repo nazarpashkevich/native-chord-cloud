@@ -16,7 +16,8 @@ export class TrackService {
     public uploadTrack(track: File): Promise<void> {
         console.log('track', track);
         const data = new FormData();
-        data.append('track', track.path);
+        data.append('path', track.path);
+        data.append('track', track);
 
         axios.post(route('media.track.upload'), data);
     }
