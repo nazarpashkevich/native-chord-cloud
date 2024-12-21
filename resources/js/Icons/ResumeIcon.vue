@@ -7,9 +7,8 @@ export default defineComponent({
 </script>
 
 <template>
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M5 12a7 7 0 1114 0 7 7 0 01-14 0zM12 5v7l3-3m-3 3l-3-3"/>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+        <path d="M8 5v14l11-7z"/>
     </svg>
 </template>
 

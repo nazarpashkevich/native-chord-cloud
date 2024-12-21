@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Domains\Auth\Http\Routing\AuthRouteRegistrar;
 use App\Domains\Common\Http\Routing\RouteRegistrar;
 use App\Domains\Home\Http\Routing\HomeRouteRegistrar;
+use App\Domains\Media\Http\Routing\MediaRouteRegistrar;
 use App\Domains\User\Http\Routing\UserRouteRegistrar;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Contracts\Routing\Registrar;
@@ -18,6 +19,7 @@ class RouteServiceProvider extends ServiceProvider
     protected array $registrars = [
         AuthRouteRegistrar::class,
         HomeRouteRegistrar::class,
+        MediaRouteRegistrar::class,
         UserRouteRegistrar::class,
     ];
 

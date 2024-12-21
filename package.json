@@ -30,6 +30,8 @@
         "vue-tsc": "^2.0.24"
     },
     "dependencies": {
-        "click-outside-vue3": "^4.0.1"
+        "click-outside-vue3": "^4.0.1",
+        "vue-final-modal": "^4.5.5",
+        "vuex": "^4.1.0"
     }
 }

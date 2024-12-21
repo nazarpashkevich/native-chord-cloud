@@ -3,16 +3,23 @@
 namespace App\Domains\Home\Http\Controllers;
 
 use App\Domains\Common\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Domains\Media\Data\UploadedTrackData;
+use App\Domains\Media\Services\TrackService;
 use Inertia\Inertia;
 use Inertia\Response;
 use Native\Laravel\Facades\Window;
 
 class HomeController extends Controller
 {
-    public function index(Request $request): Response
+    public function __construct(protected TrackService $service)
     {
-        return Inertia::render('Home/Index', []);
+    }
+
+    public function index(): Response
+    {
+        return Inertia::render('Home/Index', [
+            'all_tracks' => UploadedTrackData::toWrap($this->service->uploadedTracks()),
+        ]);
     }
 
     public function minimize(): void

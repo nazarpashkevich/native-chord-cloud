@@ -6,6 +6,9 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createApp, DefineComponent, h } from 'vue';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
 import vClickOutside from "click-outside-vue3"
+import { createVfm } from 'vue-final-modal'
+import 'vue-final-modal/style.css'
+import store from './store/index';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -17,10 +20,14 @@ createInertiaApp({
             import.meta.glob<DefineComponent>('./Pages/**/*.vue'),
         ),
     setup({ el, App, props, plugin }) {
+        const vfm = createVfm()
+
         createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(ZiggyVue)
             .use(vClickOutside)
+            .use(vfm)
+            .use(store)
             .mount(el);
     },
     progress: {

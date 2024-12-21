@@ -12,10 +12,12 @@ import UserControl from "./Partials/UserControl.vue";
 import MediaIcon from "@/Icons/MediaIcon.vue";
 import NavBar from "@/Layouts/Partials/NavBar.vue";
 import BottomPlayer from "@/Layouts/Partials/BottomPlayer.vue";
+import { ModalsContainer } from "vue-final-modal";
 
 export default defineComponent({
     name: 'AuthenticatedLayout',
     components: {
+        ModalsContainer,
         BottomPlayer,
         NavBar,
         MediaIcon,
@@ -97,7 +99,7 @@ export default defineComponent({
 
             <!-- Page Content -->
             <main>
-                <div class="py-12 px-4 grid gap-4 grid-cols-[auto,1fr] h-[calc(100vh-8.05rem)] divide-x">
+                <div class="py-12 px-4 grid gap-4 grid-cols-[auto,1fr] min-h-[calc(100vh-8.05rem)] divide-x">
                     <NavBar/>
                     <div class="px-4">
                         <slot/>
@@ -106,10 +108,13 @@ export default defineComponent({
 
                 <div class="flex w-full h-16 sticky bottom-0">
                     <div class="bg-light-surface border border-light-primary w-full rounded-t-md max-w-5xl mx-auto">
-                        <BottomPlayer/>
+                        <keep-alive>
+                            <BottomPlayer key="fixed-key"/>
+                        </keep-alive>
                     </div>
                 </div>
             </main>
         </div>
     </div>
+    <ModalsContainer/>
 </template>
