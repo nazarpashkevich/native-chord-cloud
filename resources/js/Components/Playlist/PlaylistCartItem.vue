@@ -1,40 +1,50 @@
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, PropType } from 'vue';
+import { PlaylistInterface } from '@/types/media';
+import { router } from '@inertiajs/vue3';
 
 export default defineComponent({
-    name: "PlaylistCartItem",
-    props: {
-        picture: {
-            type: String,
-            required: true
-        },
-        title: {
-            type: String,
-            required: true
-        },
-        description: {
-            type: String,
-            required: true
-        }
-    }
-})
+  name: 'PlaylistCartItem',
+  props: {
+    playlist: {
+      type: Object as PropType<PlaylistInterface>,
+      required: true,
+    },
+  },
+  methods: {
+    router() {
+      return router;
+    },
+    hrefPlaylist(playlist: PlaylistInterface): string {
+      if (playlist.provider === 'spotify') {
+        return route(`spotify.playlist.show`, playlist.id);
+      }
+
+      return '#';
+    },
+  },
+});
 </script>
 
 <template>
-    <div class="border-light-primary border rounded-md py-6 px-4 flex flex-col gap-6 bg-light-surface
-                        cursor-pointer hover:backdrop-brightness-105">
-        <div class="relative">
-            <div class="bg-cover h-48 rounded-md"
-                 :style="{backgroundImage: `url('${picture}')`}"></div>
-            <div class="absolute inset-0 bg-black opacity-30"></div>
-        </div>
-        <div>
-            <div class="font-medium text-xl text-light-text">{{ title }}</div>
-            <div class="font-medium text-xs text-light-text">{{ description }}</div>
-        </div>
+  <div
+    class="flex cursor-pointer flex-col gap-6 rounded-md border border-light-primary bg-light-surface px-4 py-6 hover:backdrop-brightness-105"
+    @click="router().visit(hrefPlaylist(playlist))"
+  >
+    <div class="relative">
+      <div
+        :style="{ backgroundImage: `url('${playlist.image}')` }"
+        class="h-48 rounded-md bg-cover"
+      ></div>
+      <div class="absolute inset-0 bg-black opacity-30"></div>
     </div>
+    <div>
+      <div class="text-xl font-medium text-light-text">
+        {{ playlist.title }}
+      </div>
+      <div class="text-xs font-medium text-light-text">
+        {{ playlist.description }}
+      </div>
+    </div>
+  </div>
 </template>
-
-<style scoped>
-
-</style>

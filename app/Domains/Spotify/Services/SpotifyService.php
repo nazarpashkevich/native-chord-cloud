@@ -81,4 +81,11 @@ class SpotifyService
             Arr::map($response->json()['items'], fn($item) => $item['track']), Collection::class
         );
    }
+
+   public function playlist(string $id): SpotifyPlaylistData
+   {
+        $response = $this->client->get("playlists/$id");
+
+        return SpotifyPlaylistData::from($response->json());
+   }
 }

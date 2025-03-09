@@ -3,6 +3,7 @@
 namespace App\Domains\Spotify\Data;
 
 use App\Domains\Media\Data\PlaylistData;
+use App\Domains\Media\Enums\MediaProvider;
 use Spatie\LaravelData\Data;
 
 class SpotifyPlaylistData extends Data
@@ -22,6 +23,7 @@ class SpotifyPlaylistData extends Data
             $this->name,
             $this->description,
             $this->images[0]['url'] ?? '',
+            MediaProvider::Spotify,
             $this->id
         );
     }

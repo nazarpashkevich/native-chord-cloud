@@ -2,6 +2,8 @@
 
 namespace App\Domains\Spotify\Data;
 
+use App\Domains\Media\Data\UploadedTrackData;
+use Illuminate\Support\Arr;
 use Spatie\LaravelData\Data;
 
 class SpotifyTrackData extends Data
@@ -16,4 +18,16 @@ class SpotifyTrackData extends Data
         public readonly array $artists,
     )
     {}
+
+    public function toMediaTrack(): UploadedTrackData
+    {
+        return new UploadedTrackData(
+            $this->name,
+            implode(', ', Arr::pluck($this->artists, 'name')),
+            $this->album->name,
+            $this->duration_ms / 1000,
+            $this->href,
+            $this->id
+        );
+    }
 }

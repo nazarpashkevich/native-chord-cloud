@@ -24,11 +24,7 @@ export default defineComponent({
   <div class="text-4xl font-semibold text-light-text">{{ title }}</div>
   <div class="grid w-full grid-cols-5 gap-12">
     <template v-for="playlist in playlists" :key="playlist.id">
-      <PlaylistCartItem
-        :description="playlist.description"
-        :picture="playlist.image"
-        :title="playlist.title"
-      />
+      <PlaylistCartItem :playlist="playlist" />
     </template>
   </div>
 </template>
