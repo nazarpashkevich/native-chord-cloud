@@ -3,7 +3,10 @@
 namespace App\Domains\User\Http\Controllers;
 
 use App\Domains\Common\Http\Controllers\Controller;
+use App\Domains\Spotify\Services\SpotifyService;
+use App\Domains\User\Data\SocialAccountData;
 use App\Domains\User\Http\Requests\ProfileUpdateRequest;
+use App\Domains\User\Models\SocialAccount;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -21,7 +24,14 @@ class ProfileController extends Controller
     {
         return Inertia::render('Profile/Edit', [
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
-            'status' => session('status'),
+            'status'          => session('status'),
+        ]);
+    }
+
+    public function index(SpotifyService $service): Response
+    {
+        return Inertia::render('Profile/Index', [
+            'socialAccounts' => SocialAccountData::collect(SocialAccount::all())
         ]);
     }
 

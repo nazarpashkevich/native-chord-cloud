@@ -9,12 +9,8 @@ export default defineComponent({
         showItems: false,
         subItems: [
             {
-                title: "Account",
-                href: "/",
-            },
-            {
                 title: "Profile",
-                href: "/",
+                href: route("profile.index"),
             },
             {
                 title: "Go to Premium",
