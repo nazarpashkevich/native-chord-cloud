@@ -2,10 +2,10 @@
 
 namespace App\Domains\Media\Data;
 
-use App\Domains\Media\Models\UploadedTrack;
-use Spatie\LaravelData\Data;
+use App\Domains\Common\Data\BaseData;
+use App\Domains\Media\Models\Track;
 
-class UploadTrackData extends Data
+class TrackData extends BaseData
 {
     public function __construct(
         public readonly string $title,
@@ -13,16 +13,17 @@ class UploadTrackData extends Data
         public readonly string $album,
         public readonly string $playtime,
         public readonly string $path,
+        public readonly ?string $playlistId = null,
     ) {
     }
 
-    public function toModel(null|int|UploadedTrack $track = null): UploadedTrack
+    public function toModel(null|int|Track $track = null): Track
     {
         if (is_int($track)) {
-            $track = UploadedTrack::query()->find($track);
+            $track = Track::query()->find($track);
         }
 
-        $track ??= new UploadedTrack();
+        $track ??= new Track();
 
         $track->fill([
             'title'    => $this->title,
@@ -31,6 +32,10 @@ class UploadTrackData extends Data
             'playtime' => $this->playtime,
             'path'     => $this->path,
         ]);
+
+        if ($this->playlistId) {
+            $track->playlist()->associate($this->playlistId);
+        }
 
         return $track;
     }

@@ -32,6 +32,7 @@
     "dependencies": {
         "click-outside-vue3": "^4.0.1",
         "vue-final-modal": "^4.5.5",
+        "vue3-dropzone": "^2.2.1",
         "vuex": "^4.1.0"
     }
 }

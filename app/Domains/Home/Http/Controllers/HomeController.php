@@ -3,7 +3,9 @@
 namespace App\Domains\Home\Http\Controllers;
 
 use App\Domains\Common\Http\Controllers\Controller;
-use App\Domains\Media\Data\UploadedTrackData;
+use App\Domains\Media\Data\PlaylistData;
+use App\Domains\Media\Data\TrackData;
+use App\Domains\Media\Services\PlaylistService;
 use App\Domains\Media\Services\TrackService;
 use App\Domains\Spotify\Data\SpotifyPlaylistData;
 use App\Domains\Spotify\Services\SpotifyService;
@@ -13,17 +15,21 @@ use Native\Laravel\Facades\Window;
 
 class HomeController extends Controller
 {
-    public function __construct(protected TrackService $service, protected SpotifyService $spotifyService)
-    {
+    public function __construct(
+        protected TrackService $trackService,
+        protected PlaylistService $playlistService,
+        protected SpotifyService $spotifyService
+    ) {
     }
 
     public function index(): Response
     {
         return Inertia::render('Home/Index', [
-            'spotify_playlists' => $this->spotifyService
+            'spotify_playlists'  => $this->spotifyService
                 ->userPlaylists()
                 ->map(fn (SpotifyPlaylistData $playlist) => $playlist->toMediaPlaylist()),
-            'all_tracks'        => UploadedTrackData::toWrap($this->service->uploadedTracks()),
+            'internal_playlists' => PlaylistData::collect($this->playlistService->list()),
+            'all_tracks'         => TrackData::toWrap($this->trackService->localList()),
         ]);
     }
 

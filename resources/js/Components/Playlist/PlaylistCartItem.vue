@@ -5,6 +5,14 @@ import { router } from '@inertiajs/vue3';
 
 export default defineComponent({
   name: 'PlaylistCartItem',
+  computed: {
+    image() {
+      // @todo move to config
+      return this.playlist.image?.length
+        ? this.playlist.image
+        : '/images/media/playlist/placeholder.png';
+    },
+  },
   props: {
     playlist: {
       type: Object as PropType<PlaylistInterface>,
@@ -16,11 +24,7 @@ export default defineComponent({
       return router;
     },
     hrefPlaylist(playlist: PlaylistInterface): string {
-      if (playlist.provider === 'spotify') {
-        return route(`spotify.playlist.show`, playlist.id);
-      }
-
-      return '#';
+      return route(`${playlist.provider}.playlist.show`, playlist.id);
     },
   },
 });
@@ -33,7 +37,7 @@ export default defineComponent({
   >
     <div class="relative">
       <div
-        :style="{ backgroundImage: `url('${playlist.image}')` }"
+        :style="{ backgroundImage: `url('${image}')` }"
         class="h-48 rounded-md bg-cover"
       ></div>
       <div class="absolute inset-0 bg-black opacity-30"></div>

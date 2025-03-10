@@ -4,6 +4,6 @@ namespace App\Domains\Media\Enums;
 
 enum MediaProvider: string
 {
-    case Internal = 'internal';
+    case Media = 'media';
     case Spotify = 'spotify';
 }

@@ -3,7 +3,7 @@ export interface PlaylistInterface {
   description: string;
   image: string;
   title: string;
-  provider: 'internal' | 'spotify';
+  provider: 'media' | 'spotify';
 }
 
 export interface TrackInterface {

@@ -17,7 +17,8 @@ class MediaRouteRegistrar extends RouteRegistrar
             $route->group(
                 ['as' => 'playlist.', 'prefix' => 'playlists', 'controller' => PlaylistController::class],
                 function (Registrar $route) {
-                    $route->get('{playlist}', 'index')->name('show');
+                    $route->get('{playlist}', 'show')->name('show');
+                    $route->post('', 'store')->name('store');
                 });
             $route->group(
                 ['as' => 'track.', 'prefix' => 'track', 'controller' => TrackController::class],
