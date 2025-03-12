@@ -76,4 +76,3 @@ The application is designed to work without requiring additional software instal
       [http://127.0.0.1:8000](http://127.0.0.1:8000).
 
 ---
-

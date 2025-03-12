@@ -27,7 +27,7 @@ class SpotifyAccountFactory
     {
         $account = SocialAccount::query()->where('provider', SocialiteProvider::Spotify)->firstOrNew();
         $account->fill([
-            'provider'  => SocialiteProvider::Spotify,
+            'provider'      => SocialiteProvider::Spotify,
             'access_token'  => $this->accessToken,
             'refresh_token' => $this->refreshToken,
             'expires_in'    => $this->expiresIn,
@@ -43,11 +43,12 @@ class SpotifyAccountFactory
 
     protected function fillAccountData(SocialAccount $account): void
     {
-        $this->service->client->withToken($this->accessToken);
+        $this->service->client->client->withToken($this->accessToken);
         $spotifyAccount = $this->service->me();
+
         $account->fill([
-           'external_id' => $spotifyAccount->id,
-           'name' => $spotifyAccount->display_name,
+            'external_id' => $spotifyAccount->id,
+            'name'        => $spotifyAccount->display_name,
         ]);
     }
 }
