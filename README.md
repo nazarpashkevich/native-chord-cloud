@@ -42,11 +42,6 @@ The application is designed to work without requiring additional software instal
 
 ## **Requirements**
 
-### For End Users:
-- **PHP 7.4+** with SQLite support (usually included by default).
-- A modern web browser.
-
-### For Developers:
 - PHP 8.x+ (recommended).
 - Composer.
 
@@ -63,16 +58,25 @@ The application is designed to work without requiring additional software instal
     - Extract the archive to a desired folder on your machine.
 
 3. **Start the Application:**
-    - On **Windows**:
-        - Double-click `start-server.bat`.
-    - On **macOS/Linux**:
-        - Open a terminal and run:
-          ```bash
-          php start-server.php
-          ```  
 
-4. **Access the Application:**
-    - Open your browser and navigate to:  
-      [http://127.0.0.1:8000](http://127.0.0.1:8000).
+---
 
+### **For Developers**
+
+1. **Install composer dependencies**
+```sh
+composer install
+```
+2. **Install npm dependencies**
+```sh
+yarn install
+```
+3. **Copy .env.example to .env**
+4. **Start the Application:**
+```sh
+php artisan native:serve
+```
+```sh
+yarn dev
+```
 ---
